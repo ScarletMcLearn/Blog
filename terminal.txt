@@ -1,0 +1,89 @@
+Last login: Sat Nov 19 07:59:25 on ttys000
+Macs-MacBook-Pro:blog mac$ rails generate scaffold Post name:string body:text
+Running via Spring preloader in process 6861
+      invoke  active_record
+      create    db/migrate/20161119095445_create_posts.rb
+      create    app/models/post.rb
+      invoke    test_unit
+      create      test/models/post_test.rb
+      create      test/fixtures/posts.yml
+      invoke  resource_route
+       route    resources :posts
+      invoke  scaffold_controller
+      create    app/controllers/posts_controller.rb
+      invoke    erb
+      create      app/views/posts
+      create      app/views/posts/index.html.erb
+      create      app/views/posts/edit.html.erb
+      create      app/views/posts/show.html.erb
+      create      app/views/posts/new.html.erb
+      create      app/views/posts/_form.html.erb
+      invoke    test_unit
+      create      test/controllers/posts_controller_test.rb
+      invoke    helper
+      create      app/helpers/posts_helper.rb
+      invoke      test_unit
+      invoke    jbuilder
+      create      app/views/posts/index.json.jbuilder
+      create      app/views/posts/show.json.jbuilder
+      create      app/views/posts/_post.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/posts.coffee
+      invoke    scss
+      create      app/assets/stylesheets/posts.scss
+      invoke  scss
+      create    app/assets/stylesheets/scaffolds.scss
+Macs-MacBook-Pro:blog mac$ rails db:migrate
+== 20161119095445 CreatePosts: migrating ======================================
+-- create_table(:posts)
+   -> 0.0018s
+== 20161119095445 CreatePosts: migrated (0.0018s) =============================
+
+Macs-MacBook-Pro:blog mac$ rails generate model Category name:string
+Running via Spring preloader in process 6959
+      invoke  active_record
+      create    db/migrate/20161119100526_create_categories.rb
+      create    app/models/category.rb
+      invoke    test_unit
+      create      test/models/category_test.rb
+      create      test/fixtures/categories.yml
+Macs-MacBook-Pro:blog mac$ rails db:migrate
+== 20161119100526 CreateCategories: migrating =================================
+-- create_table(:categories)
+   -> 0.0066s
+== 20161119100526 CreateCategories: migrated (0.0067s) ========================
+
+Macs-MacBook-Pro:blog mac$ rails c
+Running via Spring preloader in process 6988
+Loading development environment (Rails 5.0.0.1)
+2.3.0 :001 > Category.create name: "Life"
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "categories" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "Life"], ["created_at", 2016-11-19 10:07:23 UTC], ["updated_at", 2016-11-19 10:07:23 UTC]]
+   (32.7ms)  commit transaction
+ => #<Category id: 1, name: "Life", created_at: "2016-11-19 10:07:23", updated_at: "2016-11-19 10:07:23">
+2.3.0 :002 > Category.create name: "Music"
+   (1.3ms)  begin transaction
+  SQL (0.6ms)  INSERT INTO "categories" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "Music"], ["created_at", 2016-11-19 10:07:34 UTC], ["updated_at", 2016-11-19 10:07:34 UTC]]
+   (1.6ms)  commit transaction
+ => #<Category id: 2, name: "Music", created_at: "2016-11-19 10:07:34", updated_at: "2016-11-19 10:07:34">
+2.3.0 :003 > Category.create name: "Food"
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "categories" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "Food"], ["created_at", 2016-11-19 10:07:44 UTC], ["updated_at", 2016-11-19 10:07:44 UTC]]
+   (1.7ms)  commit transaction
+ => #<Category id: 3, name: "Food", created_at: "2016-11-19 10:07:44", updated_at: "2016-11-19 10:07:44">
+2.3.0 :004 > Category.count
+   (0.4ms)  SELECT COUNT(*) FROM "categories"
+ => 3
+2.3.0 :005 > exit
+Macs-MacBook-Pro:blog mac$ rails generate migration AddCategoryRefToPosts category:references
+Running via Spring preloader in process 7168
+      invoke  active_record
+      create    db/migrate/20161119101532_add_category_ref_to_posts.rb
+Macs-MacBook-Pro:blog mac$ rails db:migrate
+== 20161119101532 AddCategoryRefToPosts: migrating ============================
+-- add_reference(:posts, :category, {:foreign_key=>true})
+   -> 0.0087s
+== 20161119101532 AddCategoryRefToPosts: migrated (0.0089s) ===================
+
+Macs-MacBook-Pro:blog mac$
